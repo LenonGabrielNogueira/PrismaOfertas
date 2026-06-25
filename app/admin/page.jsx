@@ -1,0 +1,79 @@
+'use client'
+import Loading from "@/components/Loading"
+import VisitorsAreaChart from "@/components/admin/VisitorsAreaChart"
+import { MousePointerClickIcon, ShoppingBasketIcon, SearchIcon, EyeIcon, TrendingUpIcon } from "lucide-react"
+import axios from "axios"
+import { useEffect, useState } from "react"
+
+export default function AdminDashboard() {
+
+    const [loading, setLoading] = useState(true)
+    const [dashboardData, setDashboardData] = useState({
+        totalProducts: 0,
+        totalClicks: 0,
+        totalViews: 0,
+        totalSearches: 0,
+        topProducts: [],
+        criticalProducts: [],
+        chartData: [],
+    })
+
+    const dashboardCardsData = [
+        { title: 'Produtos Ativos', value: dashboardData.totalProducts, icon: ShoppingBasketIcon },
+        { title: 'Cliques (Links)', value: dashboardData.totalClicks, icon: MousePointerClickIcon },
+        { title: 'Visualizações', value: dashboardData.totalViews, icon: EyeIcon },
+        { title: 'Buscas Realizadas', value: dashboardData.totalSearches, icon: SearchIcon },
+    ]
+
+    const fetchDashboardData = async () => {
+        try {
+            const response = await axios.get('/api/analytics')
+            const { stats, topClicks, topSearches, criticalProducts, chartData } = response.data
+
+            setDashboardData(prev => ({
+                ...prev,
+                totalProducts: stats.totalProducts,
+                totalClicks: topClicks.reduce((acc, curr) => acc + curr._count.productId, 0),
+                totalViews: stats.visitorsMonth,
+                totalSearches: topSearches.reduce((acc, curr) => acc + curr._count.query, 0),
+                topProducts: topClicks,
+                criticalProducts: criticalProducts,
+                chartData: chartData
+            }))
+        } catch (error) {
+            console.error("Erro ao buscar dados de analytics", error)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    useEffect(() => {
+        fetchDashboardData()
+    }, [])
+
+    if (loading) return <Loading />
+
+    return (
+        <div className="text-slate-500">
+            <h1 className="text-2xl">Painel <span className="text-slate-800 font-medium">do Administrador</span></h1>
+
+            {/* Cards */}
+            <div className="flex flex-wrap gap-5 my-10 mt-4">
+                {
+                    dashboardCardsData.map((card, index) => (
+                        <div key={index} className="flex items-center gap-10 border border-slate-200 p-3 px-6 rounded-lg">
+                            <div className="flex flex-col gap-3 text-xs">
+                                <p>{card.title}</p>
+                                <b className="text-2xl font-medium text-slate-700">{card.value}</b>
+                            </div>
+                            <card.icon size={50} className=" w-11 h-11 p-2.5 text-slate-400 bg-slate-100 rounded-full" />
+                        </div>
+                    ))
+                }
+            </div>
+
+            <h2 className="text-xl mb-4 font-medium text-slate-800">Tráfego de Visitantes</h2>
+            <VisitorsAreaChart data={dashboardData.chartData} />
+        </div>
+    )
+}
