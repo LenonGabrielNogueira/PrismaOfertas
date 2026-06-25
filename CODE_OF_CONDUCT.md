@@ -1,130 +1,149 @@
-# Contributor Covenant Code of Conduct
+# Código de Conduta
 
-## Version 2.1
+## Nosso Compromisso
 
-## Our Pledge
+O projeto **PrismaOfertas** busca manter um ambiente profissional, respeitoso, colaborativo e seguro para todos os participantes.
 
-We as members, contributors and leaders pledge to make participation in our
-community a harassment-free experience for everyone, regardless of age, body
-size, visible or invisible disability, ethnicity, sex characteristics, gender
-identity and expression, level of experience, education, socio-economic status,
-nationality, personal appearance, race, religion or sexual identity
-and orientation.
+Ao participar deste projeto, você concorda em seguir este Código de Conduta integralmente.
 
-We pledge to act and interact in ways that contribute to an open, welcoming,
-diverse, inclusive and healthy community.
+O descumprimento destas diretrizes poderá resultar em advertências, remoção de contribuições ou banimento permanente da participação no projeto.
 
-## Our Standards
+---
 
-Examples of behavior that contributes to a positive environment for our
-community include:
+# Comportamentos Esperados
 
-* Demonstrating empathy and kindness toward other people
-* Being respectful of differing opinions, viewpoints and experiences
-* Giving and gracefully accepting constructive feedback
-* Accepting responsibility and apologizing to those affected by our mistakes,
-  and learning from the experience
-* Focusing on what is best not just for us as individuals, but for the
-  overall community
- 
-Examples of unacceptable behavior include:
+Todos os participantes devem:
 
-* The use of sexualized language or imagery and sexual attention or
-  advances of any kind
-* Trolling, insulting or derogatory comments and personal or political attacks
-* Public or private harassment
-* Publishing others' private information, such as a physical or email
-  address, without their explicit permission
-* Other conduct which could reasonably be considered inappropriate in a
-  professional setting
+* Tratar todos os membros com respeito e profissionalismo.
+* Aceitar críticas construtivas de maneira educada.
+* Fornecer feedback objetivo e fundamentado.
+* Priorizar discussões técnicas em vez de opiniões pessoais.
+* Manter uma comunicação clara, cordial e respeitosa.
+* Reportar problemas de forma responsável.
+* Colaborar visando a melhoria contínua do projeto.
 
-## Enforcement Responsibilities
+---
 
-Community leaders are responsible for clarifying and enforcing our standards of
-acceptable behavior and will take appropriate and fair corrective action in
-response to any behavior they deem inappropriate, threatening, offensive,
-or harmful.
+# Comportamentos Proibidos
 
-Community leaders have the right and responsibility to remove, edit or reject
-comments, commits, code, wiki edits, issues and other contributions that are
-not aligned to this Code of Conduct and will communicate reasons for moderation
-decisions when appropriate.
+Não serão tolerados, sob nenhuma circunstância:
 
-## Scope
+* Assédio de qualquer natureza.
+* Ofensas pessoais.
+* Insultos.
+* Xingamentos.
+* Linguagem ofensiva.
+* Discurso de ódio.
+* Intimidação.
+* Ameaças.
+* Perseguição.
+* Discriminação.
+* Ataques pessoais.
+* Divulgação de informações privadas de terceiros.
+* Publicação de conteúdo ilegal.
+* Spam.
+* Flood.
+* Trollagem.
+* Sabotagem do projeto.
+* Distribuição de malware.
+* Tentativas de exploração de vulnerabilidades sem autorização.
+* Envio de código malicioso.
+* Plágio intencional.
+* Violação de direitos autorais.
+* Divulgação de credenciais, chaves de API ou informações confidenciais.
 
-This Code of Conduct applies within all community spaces and also applies when
-an individual is officially representing the community in public spaces.
-Examples of representing our community include using an official e-mail address,
-posting via an official social media account or acting as an appointed
-representative at an online or offline event.
+---
 
-## Enforcement
+# Qualidade das Contribuições
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported to the community leaders responsible for enforcement at
-greatstackdev@gmail.com.
-All complaints will be reviewed and investigated promptly and fairly.
+Contribuições deverão atender aos seguintes requisitos:
 
-All community leaders are obligated to respect the privacy and security of the
-reporter of any incident.
+* Código organizado.
+* Código legível.
+* Código documentado quando necessário.
+* Seguir o padrão arquitetural existente.
+* Não quebrar funcionalidades existentes.
+* Não introduzir dependências desnecessárias.
+* Manter compatibilidade com o restante do projeto.
+* Passar pelos testes disponíveis antes do envio.
 
-## Enforcement Guidelines
+Pull Requests que não atenderem aos padrões mínimos poderão ser recusados.
 
-Community leaders will follow these Community Impact Guidelines in determining
-the consequences for any action they deem in violation of this Code of Conduct:
+---
 
-### 1. Correction
+# Segurança
 
-**Community Impact**: Use of inappropriate language or other behavior deemed
-unprofessional or unwelcome in the community.
+Questões relacionadas à segurança devem ser tratadas de forma responsável.
 
-**Consequence**: A private, written warning from community leaders, providing
-clarity around the nature of the violation and an explanation of why the
-behavior was inappropriate. A public apology may be requested.
- 
-### 2. Warning
+Caso identifique uma vulnerabilidade:
 
-**Community Impact**: A violation through a single incident or series
-of actions.
+* Não publique a vulnerabilidade em Issues.
+* Não divulgue provas de conceito publicamente.
+* Aguarde a análise e correção antes de qualquer divulgação responsável.
 
-**Consequence**: A warning with consequences for continued behavior. No
-interaction with the people involved, including unsolicited interaction with
-those enforcing the Code of Conduct, for a specified period of time. This
-includes avoiding interactions in community spaces as well as external channels
-like social media. Violating these terms may lead to a temporary or
-permanent ban.
- 
-### 3. Temporary Ban
+Contribuições contendo código malicioso resultarão em banimento imediato.
 
-**Community Impact**: A serious violation of community standards, including
-sustained inappropriate behavior.
+---
 
-**Consequence**: A temporary ban from any sort of interaction or public
-communication with the community for a specified period of time. No public or
-private interaction with the people involved, including unsolicited interaction
-with those enforcing the Code of Conduct, is allowed during this period.
-Violating these terms may lead to a permanent ban.
- 
-### 4. Permanent Ban
+# Uso Responsável
 
-**Community Impact**: Demonstrating a pattern of violation of community
-standards, including sustained inappropriate behavior,  harassment of an
-individual or aggression toward or disparagement of classes of individuals.
+Este projeto destina-se exclusivamente a fins legais e éticos.
 
-**Consequence**: A permanent ban from any sort of public interaction within
-the community.
+É proibido utilizar qualquer parte deste projeto para:
 
-## Attribution
+* Fraudes.
+* Ataques cibernéticos.
+* Distribuição de malware.
+* Violação de direitos autorais.
+* Atividades ilegais.
+* Qualquer finalidade que infrinja leis aplicáveis.
 
-This Code of Conduct is adapted from the [Contributor Covenant][homepage],
-version 2.1, available at
-https://www.contributor-covenant.org/version/2/1/code_of_conduct.html.
+---
 
-Community Impact Guidelines were inspired by [Mozilla's code of conduct
-enforcement ladder](https://github.com/mozilla/diversity).
+# Processo de Fiscalização
 
-[homepage]: https://www.contributor-covenant.org
+O mantenedor do projeto reserva-se o direito de:
 
-For answers to common questions about this code of conduct, see the FAQ at
-https://www.contributor-covenant.org/faq. Translations are available at
-https://www.contributor-covenant.org/translations.
+* Solicitar alterações.
+* Rejeitar Pull Requests.
+* Fechar Issues inadequadas.
+* Remover comentários ofensivos.
+* Bloquear usuários reincidentes.
+* Banir permanentemente colaboradores que violem este Código de Conduta.
+
+As decisões da manutenção serão tomadas visando preservar a qualidade, a segurança e a integridade do projeto.
+
+---
+
+# Consequências
+
+Dependendo da gravidade da infração, poderão ser aplicadas:
+
+1. Advertência.
+2. Solicitação de correção da conduta.
+3. Remoção da contribuição.
+4. Fechamento da Issue ou Pull Request.
+5. Suspensão temporária.
+6. Banimento permanente da participação no projeto.
+
+---
+
+# Escopo
+
+Este Código de Conduta aplica-se a:
+
+* Issues
+* Pull Requests
+* Discussões
+* Revisões de código
+* Comentários
+* Documentação
+* Comunicações relacionadas ao projeto
+
+---
+
+# Compromisso
+
+Ao contribuir com o **PrismaOfertas**, você declara que leu, compreendeu e concorda em cumprir integralmente este Código de Conduta.
+
+Nosso objetivo é manter um ambiente técnico, profissional, respeitoso e colaborativo para todos os participantes.
