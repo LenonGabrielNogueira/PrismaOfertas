@@ -5,23 +5,22 @@ const isAdminRoute = createRouteMatcher(['/admin(.*)']);
 
 export default clerkMiddleware(async (auth, req) => {
     if (isAdminRoute(req)) {
-    const authObj = await auth.protect();
+    const authObj = await auth();
     
-    // Verifica onde o email está no objeto
-    console.log('sessionClaims:', JSON.stringify(authObj.sessionClaims));
-    console.log('userId:', authObj.userId);
+    if (!authObj.userId) {
+    return NextResponse.redirect(new URL('/sign-in', req.url));
+    }
+
+    const sessionClaims = authObj.sessionClaims;
+    const userEmail = 
+    (sessionClaims?.email as string) ||
+    ((sessionClaims as any)?.primary_email_address as string);
 
     const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL;
-    const userEmail = 
-        authObj.sessionClaims?.email as string ||
-        authObj.sessionClaims?.['primaryEmail'] as string ||
-        (authObj.sessionClaims as any)?.['emailAddresses']?.[0]?.emailAddress;
-
-    console.log('userEmail encontrado:', userEmail);
-    console.log('adminEmail:', adminEmail);
 
     if (!userEmail || userEmail !== adminEmail) {
-        return NextResponse.redirect(new URL('/', req.url));
+    await authObj.signOut();
+    return NextResponse.redirect(new URL('/', req.url));
     }
 }
 });
