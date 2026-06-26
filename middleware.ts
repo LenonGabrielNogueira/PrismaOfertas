@@ -3,16 +3,13 @@ import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 const isAdminRoute = createRouteMatcher(['/admin(.*)']);
 
 export default clerkMiddleware(async (auth, req) => {
-  if (isAdminRoute(req)) {
-    const { userId, sessionClaims } = await auth.protect();
-    
-    const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL;
-    const userEmail = sessionClaims?.email;
+    if (isAdminRoute(req)) {
+    const { userId } = await auth.protect();
 
-    if (userEmail !== adminEmail) {
-      return Response.redirect(new URL('/', req.url));
+    if (!userId) {
+    return Response.redirect(new URL('/', req.url));
     }
-  }
+}
 });
 
 export const config = {
