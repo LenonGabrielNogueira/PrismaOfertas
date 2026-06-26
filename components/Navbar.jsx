@@ -295,19 +295,20 @@ export default function Navbar() {
                     <div className="flex items-center gap-2">
                         {isLoaded && !user && (
                             <SignInButton mode="modal">
-                                <button className="text-sm font-semibold text-white bg-slate-800 hover:bg-slate-900 px-4 py-2 rounded-xl transition-all active:scale-95">
-                                    Entrar
-                                </button>
+                            <button className="text-sm font-semibold text-white bg-slate-800 hover:bg-slate-900 px-4 py-2 rounded-xl transition-all active:scale-95">
+                                Entrar
+                            </button>
                             </SignInButton>
                         )}
 
                         {isAdmin && (
                             <Link href="/admin" className="p-2.5 text-slate-400 hover:text-green-600 hover:bg-green-50 rounded-xl transition-all" title="Dashboard Admin">
-                                <LayoutDashboardIcon size={22} />
+                            <LayoutDashboardIcon size={22} />
                             </Link>
                         )}
 
-                        {isAdmin && (
+                        {/* UserButton aparece para qualquer usuário logado, não só admin */}
+                        {isLoaded && user && (
                             <UserButton afterSignOutUrl="/" />
                         )}
                     </div>
