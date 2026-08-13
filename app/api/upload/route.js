@@ -35,7 +35,7 @@ export async function POST(request) {
     // Faz o upload para o S3
     await s3.send(
       new PutObjectCommand({
-        Bucket: process.env.AWS_BUCKET_NAME,
+        Bucket: process.env.S3_BUCKET_NAME,
         Key: s3Key,
         Body: buffer,
         ContentType: file.type,
