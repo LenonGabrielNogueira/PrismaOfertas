@@ -21,8 +21,8 @@ const ProductGallery = ({ images = [], name }) => {
 
   return (
     <div className='flex flex-col gap-4'>
-      {/* Imagem principal */}
-      <div className='relative w-[450px] aspect-square bg-slate-50 rounded-[2rem] overflow-hidden border border-slate-100 mx-auto'>
+      {/* Imagem principal — largura responsiva, não fixa */}
+      <div className='relative w-full max-w-[450px] aspect-square bg-slate-50 rounded-[2rem] overflow-hidden border border-slate-100 mx-auto'>
         <Image
           src={validImages[selected]}
           alt={name || "Produto"}
@@ -34,7 +34,7 @@ const ProductGallery = ({ images = [], name }) => {
 
       {/* Thumbnails */}
       {validImages.length > 1 && (
-        <div className='flex gap-3 overflow-x-auto pb-1'>
+        <div className='flex gap-3 overflow-x-auto pb-1 justify-center'>
           {validImages.map((img, index) => (
             <button
               key={index}
@@ -42,7 +42,7 @@ const ProductGallery = ({ images = [], name }) => {
               className={`relative w-16 h-16 shrink-0 rounded-2xl overflow-hidden
                          border-2 transition-all bg-slate-50
                          ${selected === index
-                           ? 'border-green-500 shadow-md'
+                           ? 'border-cyan-500 shadow-md'
                            : 'border-slate-100 opacity-70 hover:opacity-100'}`}
             >
               <Image

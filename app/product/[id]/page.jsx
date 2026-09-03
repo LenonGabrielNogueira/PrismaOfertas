@@ -6,6 +6,7 @@ import Breadcrumb from "@/components/Breadcrumb"
 import ProductGallery from "@/components/ProductGallery"
 import ProductInfo from "@/components/ProductInfo"
 import ProductGrid from "@/components/ProductGrid"
+import { TruckIcon, ShieldCheckIcon, BadgeCheckIcon } from "lucide-react"
 
 export const revalidate = 3600
 
@@ -35,12 +36,10 @@ const ProductPage = async ({ params }) => {
 
   if (!product) notFound()
 
-  // Registrar PageView (Prisma direto, sem fetch HTTP)
   await prisma.pageView.create({
     data: { page: `/product/${id}` },
   }).catch(err => console.error("[PAGEVIEW_ERROR]", err))
 
-  // Produtos relacionados — mesma categoria, exclui o atual
   const relatedProducts = await prisma.product.findMany({
     where: {
       categoryId: product.categoryId,
@@ -65,10 +64,36 @@ const ProductPage = async ({ params }) => {
           ]}
         />
 
-        {/* Grid principal: Galeria + Informações */}
+        {/* Grid principal: Galeria + Garantias | Informações */}
         <div className="px-6 max-w-7xl mx-auto my-10
                         grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <ProductGallery images={product.images} name={product.name} />
+
+          {/* Coluna esquerda: galeria + garantias, sempre juntas */}
+          <div className="flex flex-col">
+            <ProductGallery images={product.images} name={product.name} />
+
+            <div className="flex flex-col gap-4 mt-8 pt-8 border-t border-slate-100">
+              <div className="flex items-center gap-3 text-sm text-slate-700">
+                <span className="bg-cyan-50 rounded-full p-2 shrink-0">
+                  <BadgeCheckIcon size={16} className="text-cyan-600" />
+                </span>
+                Selecionado pela curadoria PrismaOfertas
+              </div>
+              <div className="flex items-center gap-3 text-sm text-slate-700">
+                <span className="bg-cyan-50 rounded-full p-2 shrink-0">
+                  <TruckIcon size={16} className="text-cyan-600" />
+                </span>
+                Frete calculado na loja do parceiro
+              </div>
+              <div className="flex items-center gap-3 text-sm text-slate-700">
+                <span className="bg-cyan-50 rounded-full p-2 shrink-0">
+                  <ShieldCheckIcon size={16} className="text-cyan-600" />
+                </span>
+                Compra garantida pela plataforma {product.platform || 'parceira'}
+              </div>
+            </div>
+          </div>
+
           <ProductInfo product={product} />
         </div>
 

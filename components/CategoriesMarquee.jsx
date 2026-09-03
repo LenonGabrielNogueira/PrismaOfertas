@@ -1,37 +1,14 @@
 'use client'
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useCategories } from '@/hooks/useCategories'
 
 const CategoriesMarquee = () => {
-    const [categories, setCategories] = useState([]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => { 
-        const fetchCategories = async () => {
-            try {
-                const response = await fetch('/api/categories');
-                if (!response.ok) throw new Error('Erro ao buscar categorias');
-                const data = await response.json();
-                
-                // Ajuste preventivo: garante que categories receba um array
-                // Se data.data existir (envelope da API), usamos ele. Caso contrário, tentamos o data.
-                const categoriesArray = Array.isArray(data) ? data : (data.data || []);
-                setCategories(categoriesArray);
-            } catch (error) {
-                console.error('Erro ao carregar categorias:', error);
-                setCategories([]);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchCategories();
-    }, []);
+    const { categories, loading } = useCategories()
 
     // Garantia extra antes da renderização
     const safeCategories = Array.isArray(categories) ? categories : [];
 
-    // PASSO 7: Skeleton loading para estado de carregamento ou banco vazio
+    // Skeleton loading para estado de carregamento ou banco vazio
     if (loading || safeCategories.length === 0) {
         return (
             <div className="overflow-hidden w-full relative max-w-7xl mx-auto select-none sm:my-20 px-6">
@@ -48,7 +25,6 @@ const CategoriesMarquee = () => {
         <div className="overflow-hidden w-full relative max-w-7xl mx-auto select-none group sm:my-10">
             <div className="absolute left-0 top-0 h-full w-8 z-10 pointer-events-none bg-gradient-to-r from-white to-transparent" />
             <div className="flex min-w-[200%] animate-[marqueeScroll_10s_linear_infinite] sm:animate-[marqueeScroll_40s_linear_infinite] group-hover:[animation-play-state:paused] gap-4" >
-                {/* Usamos o safeCategories para evitar erro de iteração */}
                 {[...safeCategories, ...safeCategories, ...safeCategories, ...safeCategories].map((category, index) => (
                     <Link 
                         key={index}

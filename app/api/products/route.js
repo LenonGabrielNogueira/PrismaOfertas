@@ -50,6 +50,7 @@ export async function GET(request) {
                     platform: true,
                     affiliateUrl: true,
                     isFeatured: true,
+                    createdAt: true,
                     category: {
                         select: {
                             id: true,
