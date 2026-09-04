@@ -20,14 +20,14 @@ export default function ProductCard({ product }) {
     }
 
     return (
-        <div className="group bg-white rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 overflow-hidden flex flex-col h-[450px]" >
-            <Link href={`/product/${product.id}`} className="block relative h-64 overflow-hidden bg-slate-50">
-                {/* Imagem com zoom no hover */}
+        <div className="group bg-white rounded-2xl sm:rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 overflow-hidden flex flex-col h-auto sm:h-[450px]" >
+            <Link href={`/product/${product.id}`} className="block relative aspect-square sm:h-64 sm:aspect-auto overflow-hidden bg-slate-50">
+                {/* Imagem — quadrada no mobile, altura fixa no desktop */}
                 <Image
                     src={imageSrc}
                     alt={product.name || "Produto"}
                     fill
-                    className="object-contain p-4 group-hover:scale-105 transition-transform duration-400" 
+                    className="object-contain p-2 sm:p-4 group-hover:scale-105 transition-transform duration-400" 
                 />
 
                 {/* Badges Flutuantes — SÓ NO DESKTOP (sm e acima). No mobile ficam escondidos. */}
@@ -45,37 +45,37 @@ export default function ProductCard({ product }) {
                 </div>
             </Link>
 
-            <div className="p-6 flex flex-col flex-grow">
-                {/* Título com limite de linhas */}
-                <h3 className="text-slate-600 font-bold text-base leading-tight mb-4 line-clamp-2 group-hover:text-slate-800 transition-colors">
+            <div className="p-2.5 sm:p-6 flex flex-col flex-grow">
+                {/* Título — 1 linha e compacto no mobile, 2 linhas e maior no desktop */}
+                <h3 className="text-[11px] sm:text-base text-slate-600 font-bold leading-tight mb-1 sm:mb-4 line-clamp-1 sm:line-clamp-2 group-hover:text-slate-800 transition-colors">
                     {product.name}
                 </h3>
                 
                 <div className="mt-auto">
                     {/* Selos de Plataforma/Desconto — SÓ NO MOBILE, estilo quadrado minimalista */}
                     {(product.platform || product.discount > 0) && (
-                        <div className="flex sm:hidden items-center gap-1.5 mb-2">
+                        <div className="flex sm:hidden items-center gap-1 mb-1">
                             {product.platform && (
-                                <span className="border border-slate-200 text-slate-500 text-[9px] font-semibold px-2 py-0.5 rounded-md uppercase tracking-tight">
+                                <span className="border border-slate-200 text-slate-500 text-[8px] font-semibold px-1.5 py-0.5 rounded-md uppercase tracking-tight">
                                     {product.platform}
                                 </span>
                             )}
                             {product.discount > 0 && (
-                                <span className="bg-orange-50 border border-orange-200 text-orange-600 text-[9px] font-bold px-2 py-0.5 rounded-md uppercase tracking-tight">
+                                <span className="bg-orange-50 border border-orange-200 text-orange-600 text-[8px] font-bold px-1.5 py-0.5 rounded-md uppercase tracking-tight">
                                     -{product.discount}%
                                 </span>
                             )}
                         </div>
                     )}
 
-                    {/* Preços — versão MOBILE: menores, com quebra automática se não couber */}
-                    <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 mb-1 sm:hidden">
+                    {/* Preços — versão MOBILE: bem compacta, com quebra automática se não couber */}
+                    <div className="flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5 sm:hidden">
                         {product.originalPrice && product.originalPrice > product.price && (
-                            <span className="text-[11px] text-red-400 line-through font-medium">
+                            <span className="text-[9px] text-red-400 line-through font-medium">
                                 {formatCurrency(product.originalPrice)}
                             </span>
                         )}
-                        <span className="text-lg font-black text-green-700 tracking-tight">
+                        <span className="text-sm font-black text-green-700 tracking-tight">
                             {formatCurrency(product.price)}
                         </span>
                     </div>

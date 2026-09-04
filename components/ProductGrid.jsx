@@ -30,8 +30,7 @@ const ProductGrid = ({ products = [] }) => {
     <div className="px-6 max-w-7xl mx-auto">
       {/* GRID — Seguindo rigorosamente as classes de BestSelling.jsx */}
       <div
-        className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4
-                      gap-x-6 gap-y-10 sm:gap-x-10 sm:gap-y-16"
+        className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10 sm:gap-x-10 sm:gap-y-16"
       >
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
