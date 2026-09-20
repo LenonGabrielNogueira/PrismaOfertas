@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import Image from "next/image";
 import FAV_3_LOGO from '../public/logo/FAV_3_LOGO.png'
 import { useCategories } from '@/hooks/useCategories'
@@ -17,6 +17,7 @@ import {
     Info,
     Phone as PhoneIcon,
     ArrowLeft,
+    Loader2,
 } from "lucide-react"
 
 import {
@@ -34,10 +35,16 @@ import {
 export default function Navbar() {
     const { user, isLoaded } = useUser()
     const [query, setQuery] = useState("")
+    const [suggestions, setSuggestions] = useState([])
+    const [suggestLoading, setSuggestLoading] = useState(false)
+    const [isSearchOpen, setIsSearchOpen] = useState(false)
+    const searchInputRef = useRef(null)
     const router = useRouter()
     const [menuOpen, setMenuOpen] = useState(false)
     const [view, setView] = useState('main')
     const { categories, loading } = useCategories()
+
+    const currency = process.env.NEXT_PUBLIC_CURRENCY_SYMBOL || 'R$'
 
     const isAdmin = isLoaded && user && user.primaryEmailAddress?.emailAddress === process.env.NEXT_PUBLIC_ADMIN_EMAIL
 
@@ -54,16 +61,82 @@ export default function Navbar() {
         setView('main')
     }
 
+    const closeSearch = () => {
+        setIsSearchOpen(false)
+        setQuery("")
+        setSuggestions([])
+    }
+
     const handleSearch = (e) => {
         e.preventDefault()
         if (query.trim()) {
-            router.push(`/search?q=${encodeURIComponent(query.trim())}`)
+            const term = query.trim()
+            closeSearch()
+            router.push(`/search?q=${encodeURIComponent(term)}`)
         }
+    }
+
+    // Atalho de teclado: Cmd/Ctrl+K abre, Esc fecha
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+                e.preventDefault()
+                setIsSearchOpen((prev) => !prev)
+            }
+            if (e.key === 'Escape') {
+                closeSearch()
+            }
+        }
+        document.addEventListener('keydown', handleKeyDown)
+        return () => document.removeEventListener('keydown', handleKeyDown)
+    }, [])
+
+    // Autofoco no input + trava o scroll do body quando o modal abre
+    useEffect(() => {
+        if (isSearchOpen) {
+            document.body.style.overflow = 'hidden'
+            const timer = setTimeout(() => searchInputRef.current?.focus(), 50)
+            return () => clearTimeout(timer)
+        } else {
+            document.body.style.overflow = ''
+        }
+    }, [isSearchOpen])
+
+    // Busca instantânea com debounce
+    useEffect(() => {
+        const term = query.trim()
+
+        if (term.length < 2) {
+            setSuggestions([])
+            setSuggestLoading(false)
+            return
+        }
+
+        setSuggestLoading(true)
+        const timer = setTimeout(async () => {
+            try {
+                const res = await fetch(`/api/products?search=${encodeURIComponent(term)}&limit=6`)
+                if (res.ok) {
+                    const data = await res.json()
+                    setSuggestions(data.products || [])
+                }
+            } catch (error) {
+                console.error("[SEARCH_SUGGEST_ERROR]", error)
+            } finally {
+                setSuggestLoading(false)
+            }
+        }, 300)
+
+        return () => clearTimeout(timer)
+    }, [query])
+
+    const handleSuggestionClick = () => {
+        closeSearch()
     }
 
     return (
         <>
-            {/* Overlay */}
+            {/* Overlay do menu lateral */}
             {menuOpen && (
                 <div
                     className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 transition-opacity"
@@ -246,20 +319,20 @@ export default function Navbar() {
                                                 hover:bg-clip-text hover:text-transparent">Contato</Link>
                         </div>
 
-                    {/* Busca */}
-                    <form
-                        onSubmit={handleSearch}
-                        className="flex-grow max-w-xl flex items-center bg-slate-100 rounded-2xl px-4 py-2.5 border border-transparent focus-within:border-indigo-100 focus-within:bg-white transition-all shadow-inner"
+                    {/* Botão de busca — abre o command palette */}
+                    <button
+                        onClick={() => setIsSearchOpen(true)}
+                        className="flex items-center gap-2 flex-grow max-w-xs sm:max-w-sm bg-slate-50 hover:bg-slate-100 border border-slate-200 hover:border-slate-300 rounded-xl px-3.5 py-2.5 text-left transition-all"
+                        aria-label="Abrir busca"
                     >
-                        <SearchIcon size={18} className="text-slate-400" />
-                        <input
-                            type="text"
-                            placeholder="Encontre ofertas..."
-                            className="bg-transparent border-none outline-none w-full ml-3 text-slate-900 placeholder:text-slate-400 text-sm font-light"
-                            value={query}
-                            onChange={(e) => setQuery(e.target.value)}
-                        />
-                    </form>
+                        <SearchIcon size={17} className="text-slate-400 shrink-0" />
+                        <span className="text-sm text-slate-400 font-light truncate flex-1">
+                            Buscar produtos...
+                        </span>
+                        <kbd className="hidden md:inline-flex items-center gap-0.5 text-[10px] font-semibold text-slate-400 bg-white border border-slate-200 rounded-md px-1.5 py-0.5 shrink-0">
+                            ⌘K
+                        </kbd>
+                    </button>
 
                     {/* Admin */}
                     <div className="flex items-center gap-2">
@@ -283,6 +356,110 @@ export default function Navbar() {
                     </div>
                 </div>
             </header>
+
+            {/* COMMAND PALETTE — modal de busca */}
+            {isSearchOpen && (
+                <div className="fixed inset-0 z-[60] flex items-start justify-center pt-24 sm:pt-32 px-4">
+                    <div
+                        className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
+                        onClick={closeSearch}
+                    />
+
+                    <div className="relative w-full max-w-xl bg-white rounded-2xl border border-slate-200 shadow-2xl overflow-hidden">
+                        <form onSubmit={handleSearch} className="flex items-center gap-3 px-5 py-4 border-b border-slate-100">
+                            {suggestLoading ? (
+                                <Loader2 size={19} className="text-slate-400 animate-spin shrink-0" />
+                            ) : (
+                                <SearchIcon size={19} className="text-slate-400 shrink-0" />
+                            )}
+                            <input
+                                ref={searchInputRef}
+                                type="text"
+                                placeholder="Buscar fones, eletrônicos, casa..."
+                                className="bg-transparent border-none outline-none w-full text-slate-900 placeholder:text-slate-400 text-base"
+                                value={query}
+                                onChange={(e) => setQuery(e.target.value)}
+                            />
+                            <button
+                                type="button"
+                                onClick={closeSearch}
+                                className="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-all shrink-0"
+                                aria-label="Fechar busca"
+                            >
+                                <X size={18} />
+                            </button>
+                        </form>
+
+                        {/* Resultados */}
+                        <div className="max-h-[60vh] overflow-y-auto">
+                            {query.trim().length < 2 ? (
+                                <p className="text-sm text-slate-400 text-center py-10 px-4">
+                                    Digite ao menos 2 letras para buscar
+                                </p>
+                            ) : suggestLoading && suggestions.length === 0 ? (
+                                <div className="flex items-center justify-center py-10">
+                                    <Loader2 size={20} className="text-slate-400 animate-spin" />
+                                </div>
+                            ) : suggestions.length > 0 ? (
+                                <>
+                                    <ul>
+                                        {suggestions.map((product) => (
+                                            <li key={product.id} className="border-b border-slate-100 last:border-b-0">
+                                                <Link
+                                                    href={`/product/${product.id}`}
+                                                    onClick={handleSuggestionClick}
+                                                    className="flex items-center gap-3 px-5 py-3 hover:bg-slate-50 transition-colors"
+                                                >
+                                                    <div className="w-11 h-11 rounded-lg overflow-hidden bg-slate-100 shrink-0 relative">
+                                                        {product.images?.[0] && (
+                                                            <Image
+                                                                src={product.images[0]}
+                                                                alt={product.name}
+                                                                fill
+                                                                sizes="44px"
+                                                                className="object-cover"
+                                                            />
+                                                        )}
+                                                    </div>
+                                                    <div className="flex-1 min-w-0">
+                                                        <p className="text-sm text-slate-800 font-medium truncate">
+                                                            {product.name}
+                                                        </p>
+                                                        {product.category?.name && (
+                                                            <p className="text-xs text-slate-400 truncate">
+                                                                {product.category.name}
+                                                            </p>
+                                                        )}
+                                                    </div>
+                                                    <p className="text-sm font-semibold text-slate-800 shrink-0">
+                                                        {currency} {Number(product.price).toFixed(2)}
+                                                    </p>
+                                                </Link>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                    <button
+                                        onClick={handleSearch}
+                                        className="w-full text-center text-sm font-semibold text-cyan-600 hover:bg-slate-50 py-3.5 border-t border-slate-100 transition-colors"
+                                    >
+                                        Ver todos os resultados para "{query.trim()}"
+                                    </button>
+                                </>
+                            ) : (
+                                <p className="text-sm text-slate-400 text-center py-10 px-4">
+                                    Nenhum produto encontrado para "{query.trim()}"
+                                </p>
+                            )}
+                        </div>
+
+                        <div className="hidden sm:flex items-center justify-end gap-1.5 px-5 py-2.5 border-t border-slate-100 bg-slate-50 text-[11px] text-slate-400">
+                            Pressione
+                            <kbd className="bg-white border border-slate-200 rounded px-1.5 py-0.5 font-semibold text-slate-500">Esc</kbd>
+                            para fechar
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* DRAWER — agora é flex column: header fixo + nav rolável */}
             <div className={`fixed top-0 left-0 h-full w-90 max-w-[85vw] bg-white z-50 shadow-2xl transition-transform duration-300 ease-in-out flex flex-col ${

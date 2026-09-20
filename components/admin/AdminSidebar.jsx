@@ -27,13 +27,14 @@ const AdminSidebar = () => {
                 <p className="text-slate-700">Olá, Administrador</p>
             </div>
 
-            <div className="max-sm:mt-6">
+            <div className="max-sm:mt-6 max-sm:w-full max-sm:flex max-sm:flex-col max-sm:items-center">
                 {sidebarLinks.map((link, index) => (
                     <Link
                         key={index}
                         href={link.href}
                         className={`relative flex items-center gap-3 text-slate-500
                                     hover:bg-slate-50 p-2.5 transition
+                                    max-sm:justify-center max-sm:w-full
                                     ${pathname === link.href
                                         ? 'bg-slate-100 sm:text-slate-600'
                                         : ''}`}
@@ -41,9 +42,7 @@ const AdminSidebar = () => {
                         <link.icon size={18} className="sm:ml-5" />
                         <p className="max-sm:hidden">{link.name}</p>
                         {pathname === link.href && (
-                            <span className="absolute bg-green-500 right-0
-                                             top-1.5 bottom-1.5 w-1 sm:w-1.5
-                                             rounded-l" />
+                            <span className="absolute bg-green-500 right-0 top-1.5 bottom-1.5 w-1 sm:w-1.5 rounded-l" />
                         )}
                     </Link>
                 ))}

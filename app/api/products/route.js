@@ -3,13 +3,13 @@ import prisma from '@/lib/prisma';
 export async function GET(request) {
     try {
         const { searchParams } = new URL(request.url);
-        
+
         const search = searchParams.get('search') || '';
         const categorySlug = searchParams.get('category') || '';
         const isFeatured = searchParams.get('isFeatured') === 'true';
         const discount = searchParams.get('discount') === 'true';
         const page = Math.max(1, parseInt(searchParams.get('page') || '1'));
-        const limit = Math.min(50, parseInt(searchParams.get('limit') || '12')); // Padrão 12 conforme objetivo
+        const limit = Math.min(50, parseInt(searchParams.get('limit') || '12'));
         const skip = (page - 1) * limit;
 
         const where = {
@@ -17,14 +17,27 @@ export async function GET(request) {
         };
 
         if (search) {
-            where.OR = [
-                { name: { contains: search, mode: 'insensitive' } },
-                { description: { contains: search, mode: 'insensitive' } },
-            ];
+            // Divide a busca em palavras e exige que cada uma apareça
+            // em algum lugar (nome, descrição ou categoria) — permite
+            // ordem diferente e termos espalhados no texto.
+            const words = search
+                .trim()
+                .split(/\s+/)
+                .filter(Boolean);
+
+            if (words.length > 0) {
+                where.AND = words.map((word) => ({
+                    OR: [
+                        { name: { contains: word, mode: 'insensitive' } },
+                        { description: { contains: word, mode: 'insensitive' } },
+                        { category: { name: { contains: word, mode: 'insensitive' } } },
+                    ],
+                }));
+            }
         }
 
         if (categorySlug) {
-            where.category = { slug: categorySlug };
+            where.category = { ...where.category, slug: categorySlug };
         }
 
         if (isFeatured) {
@@ -35,7 +48,6 @@ export async function GET(request) {
             where.discount = { gt: 0 };
         }
 
-        // Query ajustada para o novo contrato da Fase 3
         const [products, total, categoryData] = await Promise.all([
             prisma.product.findMany({
                 where,
@@ -46,7 +58,7 @@ export async function GET(request) {
                     originalPrice: true,
                     price: true,
                     discount: true,
-                    images: true,        // ✅ corrigido de image para images
+                    images: true,
                     platform: true,
                     affiliateUrl: true,
                     isFeatured: true,
@@ -73,7 +85,7 @@ export async function GET(request) {
 
         return Response.json(
             {
-                products, // Contract ajustado para CategoryPage
+                products,
                 total,
                 category: categoryData,
                 page,
