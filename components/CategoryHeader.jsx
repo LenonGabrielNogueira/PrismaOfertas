@@ -12,7 +12,7 @@ const CategoryHeader = ({
     <div className="px-6 max-w-7xl mx-auto mt-10 mb-8">
       <div
         className="bg-gradient-to-r from-green-50 to-slate-50 border border-slate-100
-                      rounded-[2rem] p-8 sm:p-10"
+                      rounded-2xl p-8 sm:p-10"
       >
         {/* Breadcrumb Visual */}
         <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-3">

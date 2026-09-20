@@ -14,7 +14,7 @@ export default function Contact() {
                 <div className="max-w-7xl mx-auto px-6 md:px-16 lg:px-32 py-10">
                     <Title title="Entre em Contato" description="Estamos aqui para ajudar!" visibleButton={false} />
 
-                    <div className="mt-10 grid md:grid-cols-[2fr_3fr] rounded-[2rem] overflow-hidden shadow-sm border border-slate-100">
+                    <div className="mt-10 grid md:grid-cols-[2fr_3fr] rounded-2xl overflow-hidden shadow-sm border border-slate-100">
 
                         {/* Painel escuro — contatos diretos + horário */}
                         <div className="bg-slate-800 text-slate-200 p-8 sm:p-10 flex flex-col justify-between">

@@ -10,7 +10,7 @@ const ProductGrid = ({ products = [] }) => {
       <div className="px-6 max-w-7xl mx-auto">
         <div
           className="flex flex-col items-center justify-center py-24
-                        bg-slate-50 rounded-[2.5rem] border-2 border-dashed border-slate-200"
+                        bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200"
         >
           <div className="bg-white p-6 rounded-full shadow-sm mb-4">
             <PackageSearchIcon size={40} className="text-slate-300" />

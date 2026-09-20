@@ -12,7 +12,7 @@ const ProductGallery = ({ images = [], name }) => {
 
   if (validImages.length === 0) {
     return (
-      <div className='w-full aspect-square bg-slate-100 rounded-[2rem]
+      <div className='w-full aspect-square bg-slate-100 rounded-2xl
                       flex items-center justify-center'>
         <span className='text-slate-300 text-sm'>Sem imagem</span>
       </div>
@@ -22,7 +22,7 @@ const ProductGallery = ({ images = [], name }) => {
   return (
     <div className='flex flex-col gap-4'>
       {/* Imagem principal — largura responsiva, não fixa */}
-      <div className='relative w-full max-w-[450px] aspect-square bg-slate-50 rounded-[2rem] overflow-hidden border border-slate-100 mx-auto'>
+      <div className='relative w-full max-w-[450px] aspect-square bg-slate-50 rounded-2xl overflow-hidden border border-slate-100 mx-auto'>
         <Image
           src={validImages[selected]}
           alt={name || "Produto"}

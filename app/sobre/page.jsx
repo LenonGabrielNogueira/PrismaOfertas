@@ -106,7 +106,7 @@ export default function About() {
                         {PILLARS.map((pillar) => (
                             <div
                                 key={pillar.title}
-                                className={`${pillar.span} border border-slate-100 rounded-[2rem] p-8 hover:shadow-lg hover:-translate-y-1 transition-all duration-300`}
+                                className={`${pillar.span} border border-slate-100 rounded-2xl p-8 hover:shadow-lg hover:-translate-y-1 transition-all duration-300`}
                             >
                                 <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-5 ${pillar.accent}`}>
                                     <pillar.icon size={20} />

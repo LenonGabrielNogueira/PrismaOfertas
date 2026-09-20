@@ -8,7 +8,7 @@ const CategorySection = ({ categoryName, categorySlug, products, totalCount, rev
 
     return (
         <section className={`flex flex-col ${reversed ? 'md:flex-row-reverse' : 'md:flex-row'} gap-8 md:gap-10 items-start`}>
-            <div className="md:w-1/4 w-full md:sticky md:top-24 bg-gradient-to-r from-green-50 to-slate-50 border border-slate-100 rounded-[2rem] p-6 sm:p-8">
+            <div className="md:w-1/4 w-full md:sticky md:top-24 bg-gradient-to-r from-green-50 to-slate-50 border border-slate-100 rounded-2xl p-6 sm:p-8">
                 <p className="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-2">Categoria</p>
                 <h2 className="text-2xl font-black text-slate-800 leading-tight mb-4">{categoryName}</h2>
 

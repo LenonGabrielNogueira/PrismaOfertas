@@ -30,7 +30,7 @@ const BestSelling = ({ products = [] }) => {
                 </div>
             ) : (
                 /* 🟢 Estado visual amigável (Prevenção para banco vazio) */
-                <div className="mt-12 flex flex-col items-center justify-center py-24 bg-slate-50 rounded-[2.5rem] border-2 border-dashed border-slate-200">
+                <div className="mt-12 flex flex-col items-center justify-center py-24 bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200">
                     <div className="bg-white p-6 rounded-full shadow-sm mb-4">
                         <PackageSearchIcon size={40} className="text-slate-300" />
                     </div>

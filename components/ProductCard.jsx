@@ -20,7 +20,7 @@ export default function ProductCard({ product }) {
     }
 
     return (
-        <div className="group bg-white rounded-2xl sm:rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 overflow-hidden flex flex-col h-auto sm:h-[450px]" >
+        <div className="group bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 overflow-hidden flex flex-col h-auto sm:h-[450px]" >
             <Link href={`/product/${product.id}`} className="block relative aspect-square sm:h-64 sm:aspect-auto overflow-hidden bg-slate-50">
                 {/* Imagem — quadrada no mobile, altura fixa no desktop */}
                 <Image

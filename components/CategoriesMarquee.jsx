@@ -29,7 +29,7 @@ const CategoriesMarquee = () => {
                     <Link 
                         key={index}
                         href={`/category/${category.slug}`}
-                        className="px-9 py-5 bg-cyan-100 border border-cyan-100 shadow-sm rounded-3xl text-cyan-700 font-medium text-xs sm:text-sm whitespace-nowrap transition-all duration-300 active:scale-95 hover:bg-gradient-to-r hover:from-red-400 hover:via-orange-400 hover:via-cyan-500 hover:to-violet-400 hover:text-white hover:border-transparent hover:shadow-lg hover:shadow-violet-400/30"
+                        className="px-9 py-5 bg-cyan-100 border border-cyan-100 shadow-sm rounded-2xl text-cyan-700 font-medium text-xs sm:text-sm whitespace-nowrap transition-all duration-300 active:scale-95 hover:bg-gradient-to-r hover:from-red-400 hover:via-orange-400 hover:via-cyan-500 hover:to-violet-400 hover:text-white hover:border-transparent hover:shadow-lg hover:shadow-violet-400/30"
                     >
                         {category.name}
                     </Link>
