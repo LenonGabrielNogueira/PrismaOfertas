@@ -5,7 +5,7 @@ import { PackageSearchIcon } from 'lucide-react'
 
 const BestSelling = ({ products = [] }) => {
 
-    const displayQuantity = 8
+    const displayQuantity = 12
 
     // 🟢 Filtro OBRIGATÓRIO: Garante que apenas produtos com imagens válidas sejam renderizados
     const validProducts = products.filter(product => product.images && product.images.length > 0)
@@ -22,8 +22,8 @@ const BestSelling = ({ products = [] }) => {
             />
             
             {visibleProducts.length > 0 ? (
-                /* 🟢 Grid Ajustado: 2 colunas mobile, 3 tablet, 4 desktop com espaçamento generoso */
-                <div className='mt-12 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10 sm:gap-x-10 sm:gap-y-16'>
+                /* 🟢 Grid: 2 colunas mobile, 3 tablet, 4 desktop — 12 cards fecham linhas completas */
+                <div className='mt-12 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5'>
                     {visibleProducts.map((product) => (
                         <ProductCard key={product.id} product={product} />
                     ))}

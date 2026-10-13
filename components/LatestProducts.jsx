@@ -6,7 +6,7 @@ import { SparklesIcon } from 'lucide-react'
 
 const LatestProducts = ({ products = [] }) => {
 
-    const displayQuantity = 4
+    const displayQuantity = 12
 
     // 🟢 Filtro OBRIGATÓRIO: Garante que apenas produtos com imagens válidas sejam renderizados
     const validProducts = products.filter(product => product.images && product.images.length > 0)
@@ -23,8 +23,8 @@ const LatestProducts = ({ products = [] }) => {
             />
             
             {visibleProducts.length > 0 ? (
-                /* 🟢 Grid Padronizado: Mantém consistência visual com BestSelling */
-                <div className='mt-12 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10 sm:gap-x-10 sm:gap-y-16'>
+                /* 🟢 Grid Padronizado: 12 cards fecham linhas completas em 2, 3 e 4 colunas */
+                <div className='mt-12 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5'>
                     {visibleProducts.map((product) => (
                         <ProductCard key={product.id} product={product} />
                     ))}

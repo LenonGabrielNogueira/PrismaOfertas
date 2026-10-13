@@ -28,7 +28,7 @@ const slides = [
         badgeBg: 'bg-green-300/50',
         titleGradient: 'from-slate-800 via-slate-700 to-green-800',
         image: assets.hero_model_img,
-        imageClass: 'sm:max-w-sm lg:max-w-md',
+        imageClass: 'sm:max-w-[14rem] lg:max-w-xs',
     },
     {
         id: 'oferta-do-dia',
@@ -44,7 +44,7 @@ const slides = [
         badgeBg: 'bg-violet-300/50',
         titleGradient: 'from-slate-800 via-slate-700 to-violet-800',
         image: assets.hero_product_img1,
-        imageClass: 'sm:max-w-[16rem] lg:max-w-xs sm:mb-10',
+        imageClass: 'sm:max-w-[12rem] lg:max-w-[14rem] sm:mb-6',
     },
     {
         id: 'preco-ancora',
@@ -60,7 +60,7 @@ const slides = [
         badgeBg: 'bg-emerald-300/50',
         titleGradient: 'from-slate-800 via-slate-700 to-emerald-800',
         image: assets.hero_product_img2,
-        imageClass: 'sm:max-w-[16rem] lg:max-w-xs sm:mb-10',
+        imageClass: 'sm:max-w-[12rem] lg:max-w-[14rem] sm:mb-6',
     },
     {
         id: 'mais-vendidos',
@@ -76,7 +76,7 @@ const slides = [
         badgeBg: 'bg-rose-300/50',
         titleGradient: 'from-slate-800 via-slate-700 to-rose-800',
         image: assets.hero_product_img1,
-        imageClass: 'sm:max-w-[16rem] lg:max-w-xs sm:mb-10',
+        imageClass: 'sm:max-w-[12rem] lg:max-w-[14rem] sm:mb-6',
     },
 ]
 
@@ -158,9 +158,9 @@ const Hero = () => {
 
             <div className='flex max-xl:flex-col gap-4 sm:gap-8 max-w-7xl mx-auto my-6 sm:my-10'>
 
-                {/* 🎠 CARD PRINCIPAL — agora é um carrossel (mesmo tamanho do original) */}
+                {/* 🎠 CARD PRINCIPAL — carrossel (versão achatada no desktop) */}
                 <div
-                    className='relative flex-1 flex flex-col border border-slate-200 rounded-2xl xl:min-h-100 group hover:border-slate-400 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden'
+                    className='relative flex-1 flex flex-col border border-slate-200 rounded-2xl xl:min-h-72 group hover:border-slate-400 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden'
                     role='region'
                     aria-roledescription='carrossel'
                     aria-label='Destaques da loja'
@@ -170,7 +170,7 @@ const Hero = () => {
                             {slides.map((s, i) => (
                                 <div
                                     key={s.id}
-                                    className={`relative flex-[0_0_100%] min-w-0 xl:min-h-100 ${s.bg}`}
+                                    className={`relative flex-[0_0_100%] min-w-0 xl:min-h-72 ${s.bg}`}
                                     role='group'
                                     aria-roledescription='slide'
                                     aria-label={`${i + 1} de ${slides.length}`}
@@ -178,7 +178,7 @@ const Hero = () => {
                                     {/* Slide inteiro clicável → loja */}
                                     <Link href={s.href} draggable={false} aria-label={s.title} className='absolute inset-0 z-10' />
 
-                                    <div className='p-6 pb-12 sm:p-16 relative z-0'>
+                                    <div className='p-6 pb-12 sm:p-10 sm:pb-12 relative z-0'>
                                         {/* Badge + gatilho */}
                                         <div className={`inline-flex items-center gap-3 ${s.badgeBg} text-slate-700 pr-4 p-1 rounded-full text-xs sm:text-sm font-medium`}>
                                             <span className='bg-gradient-to-r from-red-400 via-orange-400 via-cyan-500 to-violet-400 text-white px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold shadow-sm'>
@@ -189,15 +189,15 @@ const Hero = () => {
                                         </div>
 
                                         {/* Título com gradiente */}
-                                        <h2 className={`text-3xl sm:text-6xl leading-[1.15] sm:leading-[1.1] my-3 sm:my-6 font-bold bg-gradient-to-r ${s.titleGradient} bg-clip-text text-transparent max-w-xs sm:max-w-lg`}>
+                                        <h2 className={`text-3xl sm:text-4xl lg:text-5xl leading-[1.15] sm:leading-[1.1] my-3 sm:my-4 font-bold bg-gradient-to-r ${s.titleGradient} bg-clip-text text-transparent max-w-xs sm:max-w-xl`}>
                                             {s.title}
                                         </h2>
 
                                         {/* Preço / contador */}
-                                        <div className='text-slate-800 mt-4 sm:mt-10 flex flex-wrap items-end gap-x-8 gap-y-4'>
+                                        <div className='text-slate-800 mt-4 sm:mt-6 flex flex-wrap items-end gap-x-8 gap-y-4'>
                                             <div>
                                                 <p className='text-xs uppercase tracking-tighter font-semibold opacity-70'>{s.priceLabel}</p>
-                                                <p className={`${s.smallPrice ? 'text-2xl sm:text-4xl' : 'text-3xl sm:text-5xl'} font-black tracking-tight`}>
+                                                <p className={`${s.smallPrice ? 'text-2xl sm:text-3xl' : 'text-3xl sm:text-4xl'} font-black tracking-tight`}>
                                                     {s.smallPrice ? s.price : `${currency} ${s.price}`}
                                                 </p>
                                             </div>
@@ -205,15 +205,15 @@ const Hero = () => {
                                         </div>
 
                                         {/* CTA visual (span: o clique passa para o Link do slide) */}
-                                        <span className='pointer-events-none inline-block bg-slate-800 text-white text-xs sm:text-sm font-bold py-3 sm:py-4 px-6 sm:px-10 mt-5 sm:mt-12 rounded-xl group-hover:bg-slate-900 group-hover:scale-105 transition-all shadow-xl uppercase tracking-wider'>
+                                        <span className='pointer-events-none inline-block bg-slate-800 text-white text-xs sm:text-sm font-bold py-3 px-6 sm:px-10 mt-5 sm:mt-6 rounded-xl group-hover:bg-slate-900 group-hover:scale-105 transition-all shadow-xl uppercase tracking-wider'>
                                             {s.cta}
                                         </span>
                                     </div>
 
                                     {/* Selo de desconto */}
                                     {s.seal && (
-                                        <div className='hidden sm:flex absolute top-8 right-8 z-0 items-center justify-center w-24 h-24 rounded-full bg-white/70 backdrop-blur border border-emerald-200 shadow-lg rotate-6'>
-                                            <span className='text-2xl font-black text-emerald-800'>{s.seal}</span>
+                                        <div className='hidden sm:flex absolute top-5 right-5 z-0 items-center justify-center w-20 h-20 rounded-full bg-white/70 backdrop-blur border border-emerald-200 shadow-lg rotate-6'>
+                                            <span className='text-xl font-black text-emerald-800'>{s.seal}</span>
                                         </div>
                                     )}
 
@@ -248,7 +248,7 @@ const Hero = () => {
                     </button>
 
                     {/* Bolinhas (a ativa vira pílula) */}
-                    <div className='absolute bottom-4 left-6 sm:left-16 z-20 flex items-center gap-2'>
+                    <div className='absolute bottom-4 left-6 sm:left-10 z-20 flex items-center gap-2'>
                         {slides.map((s, i) => (
                             <button
                                 key={s.id}
@@ -273,28 +273,28 @@ const Hero = () => {
                     )}
                 </div>
 
-                {/* 🟠 CARDS LATERAIS (ORANGE & BLUE) — inalterados */}
+                {/* 🟠 CARDS LATERAIS (ORANGE & BLUE) — compactados no desktop */}
                 <div className='grid grid-cols-2 gap-3 sm:flex sm:flex-col sm:gap-6 md:flex-row xl:flex-col w-full xl:max-w-sm text-sm'>
                     {/* Card Laranja */}
-                    <Link href="/shop" className='flex-1 flex items-center justify-between w-full bg-orange-200 border border-orange-300 rounded-2xl p-4 sm:p-8 group hover:border-orange-400 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden'>
+                    <Link href="/shop" className='flex-1 flex items-center justify-between w-full bg-orange-200 border border-orange-300 rounded-2xl p-4 sm:p-5 group hover:border-orange-400 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden'>
                         <div className="relative z-10">
-                            <p className='text-lg sm:text-3xl font-bold bg-gradient-to-br from-slate-800 to-orange-800 bg-clip-text text-transparent max-w-[6rem] sm:max-w-40 leading-tight'>Melhores produtos</p>
-                            <p className='flex items-center gap-1 mt-2 sm:mt-4 font-semibold text-slate-700 group-hover:text-slate-900 transition-colors text-xs sm:text-sm'>
+                            <p className='text-lg sm:text-2xl font-bold bg-gradient-to-br from-slate-800 to-orange-800 bg-clip-text text-transparent max-w-[6rem] sm:max-w-40 leading-tight'>Melhores produtos</p>
+                            <p className='flex items-center gap-1 mt-2 sm:mt-3 font-semibold text-slate-700 group-hover:text-slate-900 transition-colors text-xs sm:text-sm'>
                                 Ver Mais <ArrowRightIcon className='group-hover:translate-x-1 transition-transform w-3.5 h-3.5 sm:w-[18px] sm:h-[18px]' />
                             </p>
                         </div>
-                        <Image className='w-14 sm:w-32 group-hover:scale-110 transition-transform duration-500' src={assets.hero_product_img1} alt="Ofertas Especiais" />
+                        <Image className='w-14 sm:w-24 group-hover:scale-110 transition-transform duration-500' src={assets.hero_product_img1} alt="Ofertas Especiais" />
                     </Link>
 
                     {/* Card Azul */}
-                    <Link href="/shop" className='flex-1 flex items-center justify-between w-full bg-blue-200 border border-blue-300 rounded-2xl p-4 sm:p-8 group hover:border-blue-400 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden'>
+                    <Link href="/shop" className='flex-1 flex items-center justify-between w-full bg-blue-200 border border-blue-300 rounded-2xl p-4 sm:p-5 group hover:border-blue-400 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 overflow-hidden'>
                         <div className="relative z-10">
-                            <p className='text-lg sm:text-3xl font-bold bg-gradient-to-br from-slate-800 to-blue-800 bg-clip-text text-transparent max-w-[6rem] sm:max-w-40 leading-tight'>Grandes descontos</p>
-                            <p className='flex items-center gap-1 mt-2 sm:mt-4 font-semibold text-slate-700 group-hover:text-slate-900 transition-colors text-xs sm:text-sm'>
+                            <p className='text-lg sm:text-2xl font-bold bg-gradient-to-br from-slate-800 to-blue-800 bg-clip-text text-transparent max-w-[6rem] sm:max-w-40 leading-tight'>Grandes descontos</p>
+                            <p className='flex items-center gap-1 mt-2 sm:mt-3 font-semibold text-slate-700 group-hover:text-slate-900 transition-colors text-xs sm:text-sm'>
                                 Ver Mais <ArrowRightIcon className='group-hover:translate-x-1 transition-transform w-3.5 h-3.5 sm:w-[18px] sm:h-[18px]' />
                             </p>
                         </div>
-                        <Image className='w-14 sm:w-32 group-hover:scale-110 transition-transform duration-500' src={assets.hero_product_img2} alt="Descontos Incríveis" priority />
+                        <Image className='w-14 sm:w-24 group-hover:scale-110 transition-transform duration-500' src={assets.hero_product_img2} alt="Descontos Incríveis" priority />
                     </Link>
                 </div>
             </div>

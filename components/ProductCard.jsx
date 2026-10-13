@@ -4,120 +4,98 @@ import Link from 'next/link'
 import axios from 'axios'
 import { formatCurrency } from '@/lib/utils'
 
-export default function ProductCard({ product }) {
-    const imageSrc = (product.images && product.images[0] && product.images[0] !== "") 
-        ? product.images[0] 
-        : "/placeholder.png"
+// Gradiente da marca (indigo → fuchsia → rose → amber), usado só como detalhe
+const BRAND_GRADIENT = 'linear-gradient(135deg, #6366f1, #d946ef, #f43f5e, #f59e0b)'
 
-    const handleProductClick = async (e) => {
+export default function ProductCard({ product }) {
+    const imageSrc = product.images?.[0] ? product.images[0] : '/placeholder.png'
+    const hasOriginalPrice = product.originalPrice && product.originalPrice > product.price
+
+    const handleProductClick = (e) => {
         e.preventDefault()
-        try {
-            await axios.post('/api/analytics/click', { productId: product.id })
-        } catch (error) {
-            console.error("Erro ao registrar clique:", error)
-        }
+        // Registra o clique sem esperar a resposta, para a loja abrir na hora
+        // (evita bloqueio de pop-up em alguns navegadores)
+        axios
+            .post('/api/analytics/click', { productId: product.id })
+            .catch((error) => console.error('Erro ao registrar clique:', error))
         window.open(product.affiliateUrl, '_blank', 'noopener,noreferrer')
     }
 
     return (
-        <div className="group bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 overflow-hidden flex flex-col h-auto sm:h-[450px]" >
-            <Link href={`/product/${product.id}`} className="block relative aspect-square sm:h-64 sm:aspect-auto overflow-hidden bg-slate-50">
-                {/* Imagem — quadrada no mobile, altura fixa no desktop */}
-                <Image
-                    src={imageSrc}
-                    alt={product.name || "Produto"}
-                    fill
-                    className="object-contain p-2 sm:p-4 group-hover:scale-105 transition-transform duration-400" 
-                />
+        <article className="group relative flex flex-col bg-blue-50 rounded-lg overflow-hidden">
+            <Link
+                href={`/product/${product.id}`}
+                className="flex flex-col flex-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-inset"
+            >
+                {/* Imagem quadrada */}
+                <div className="relative aspect-square bg-white">
+                    <Image
+                        src={imageSrc}
+                        alt={product.name || 'Produto'}
+                        fill
+                        sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
+                        className="object-contain p-3 sm:p-5"
+                    />
 
-                {/* Badges Flutuantes — SÓ NO DESKTOP (sm e acima). No mobile ficam escondidos. */}
-                <div className="hidden sm:flex absolute top-4 left-4 right-4 justify-between items-start pointer-events-none">
                     {product.platform && (
-                        <span className="bg-white/90 backdrop-blur-md text-slate-800 text-[10px] font-bold px-3 py-1.5 rounded-full shadow-sm border border-slate-100 uppercase tracking-tight">
+                        <span className="absolute top-2 left-2 bg-cyan-50 border border-cyan-200 text-cyan-600 text-[11px] font-semibold px-1.5 py-0.5 rounded">
                             {product.platform}
                         </span>
                     )}
+
                     {product.discount > 0 && (
-                        <span className="bg-orange-500 text-white text-[10px] font-black px-3 py-1.5 rounded-full shadow-md uppercase tracking-tight">
-                            -{product.discount}% OFF
+                        <span className="absolute top-2 right-2 bg-orange-50 border border-orange-200 text-orange-600 text-[11px] font-semibold px-1.5 py-0.5 rounded">
+                            -{product.discount}%
                         </span>
                     )}
+                </div>
+
+                {/* Informações */}
+                <div className="flex flex-col gap-1 px-3 pt-3 pb-3 sm:px-4 sm:pb-4 border-t bg-blue-50 border-slate-400">
+                    <h3 className="text-[13px] sm:text-sm text-slate-900 font-medium leading-snug line-clamp-2">
+                        {product.name}
+                    </h3>
+
+                    <div>
+                        {hasOriginalPrice && (
+                            <span className="block text-xs text-red-500 line-through">
+                                {formatCurrency(product.originalPrice)}
+                            </span>
+                        )}
+                        <span className="text-base sm:text-lg font-bold text-slate-900">
+                            {formatCurrency(product.price)}
+                        </span>
+                    </div>
                 </div>
             </Link>
 
-            <div className="p-2.5 sm:p-6 flex flex-col flex-grow">
-                {/* Título — 1 linha e compacto no mobile, 2 linhas e maior no desktop */}
-                <h3 className="text-[11px] sm:text-base text-slate-600 font-bold leading-tight mb-1 sm:mb-4 line-clamp-1 sm:line-clamp-2 group-hover:text-slate-800 transition-colors">
-                    {product.name}
-                </h3>
-                
-                <div className="mt-auto">
-                    {/* Selos de Plataforma/Desconto — SÓ NO MOBILE, estilo quadrado minimalista */}
-                    {(product.platform || product.discount > 0) && (
-                        <div className="flex sm:hidden items-center gap-1 mb-1">
-                            {product.platform && (
-                                <span className="border border-slate-200 text-slate-500 text-[8px] font-semibold px-1.5 py-0.5 rounded-md uppercase tracking-tight">
-                                    {product.platform}
-                                </span>
-                            )}
-                            {product.discount > 0 && (
-                                <span className="bg-orange-50 border border-orange-200 text-orange-600 text-[8px] font-bold px-1.5 py-0.5 rounded-md uppercase tracking-tight">
-                                    -{product.discount}%
-                                </span>
-                            )}
-                        </div>
-                    )}
+            {/* Botão discreto — só no desktop. No mobile, o toque no card abre a página do produto. */}
+            <button
+                type="button"
+                onClick={handleProductClick}
+                className="hidden sm:block mx-4 mb-4 border border-slate-500 bg-cyan-100 text-cyan-700 text-sm font-medium py-2 rounded-md transition-all duration-300 hover:bg-gradient-to-r hover:from-indigo-500 hover:via-fuchsia-500 hover:to-amber-500 hover:border-transparent hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+            >
+                Ver oferta
+            </button>
 
-                    {/* Preços — versão MOBILE: bem compacta, com quebra automática se não couber */}
-                    <div className="flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5 sm:hidden">
-                        {product.originalPrice && product.originalPrice > product.price && (
-                            <span className="text-[9px] text-red-400 line-through font-medium">
-                                {formatCurrency(product.originalPrice)}
-                            </span>
-                        )}
-                        <span className="text-sm font-black text-green-700 tracking-tight">
-                            {formatCurrency(product.price)}
-                        </span>
-                    </div>
+            {/* Borda cinza fixa */}
+            <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 rounded-lg border border-slate-400"
+            />
 
-                    {/* Preços — versão DESKTOP: igual ao original, empilhados e maiores */}
-                    <div className="hidden sm:flex sm:flex-col mb-5">
-                        {product.originalPrice && product.originalPrice > product.price && (
-                            <span className="text-xs text-red-500 line-through font-medium">
-                                {formatCurrency(product.originalPrice)}
-                            </span>
-                        )}
-                        <span className="text-2xl font-black text-green-700 tracking-tighter">
-                            {formatCurrency(product.price)}
-                        </span>
-                    </div>
-
-                    {/* Botão de Ação Estilizado — SÓ NO DESKTOP. No mobile, o clique na imagem já leva pra página do produto, que tem seu próprio botão. */}
-                    <button 
-                        onClick={handleProductClick} 
-                            className="hidden sm:block w-full bg-cyan-100 text-cyan-800 text-xs font-bold py-4
-                            px-4
-                            rounded-2xl
-                            uppercase
-                            tracking-widest
-                            transition-all
-                            duration-300
-                            shadow-lg
-                            shadow-slate-200
-                            hover:bg-gradient-to-r
-                            hover:text-white
-                            hover:to-violet-400
-                            hover:via-orange-400
-                            hover:via-cyan-500
-                            hover:from-red-400
-                            hover:scale-[1.02]
-                            active:scale-95
-                            "
-                    >
-                        Ver na Loja
-                    </button>
-                </div>
-            </div>
-        </div>
+            {/* Borda em gradiente da marca que envolve o card inteiro no hover */}
+            <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                style={{
+                    backgroundImage: BRAND_GRADIENT,
+                    padding: '1.5px',
+                    WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                    WebkitMaskComposite: 'xor',
+                    maskComposite: 'exclude',
+                }}
+            />
+        </article>
     )
 }

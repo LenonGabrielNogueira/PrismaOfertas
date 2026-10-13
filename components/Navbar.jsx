@@ -18,6 +18,10 @@ import {
     Phone as PhoneIcon,
     ArrowLeft,
     Loader2,
+    Home,
+    Store,
+    ShieldCheck,
+    ChevronRight,
 } from "lucide-react"
 
 import {
@@ -31,6 +35,12 @@ import {
     UserButton,
     SignInButton,
 } from "@clerk/nextjs"
+
+// Item do menu lateral: cor de fundo no hover (vale para desktop e mobile)
+const drawerLinkClass =
+    "group flex items-center gap-3 w-full px-3 py-2.5 rounded-md text-[15px] text-left text-cyan-600 transition-colors hover:bg-cyan-200 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+
+const drawerIconClass = "text-cyan-500 group-hover:text-cyan-900 transition-colors shrink-0"
 
 export default function Navbar() {
     const { user, isLoaded } = useUser()
@@ -150,7 +160,7 @@ export default function Navbar() {
                     {/* Botão do Menu */}
                     <button
                         onClick={() => setMenuOpen(true)}
-                        className="p-2 -ml-2 text-slate-600 hover:text-slate-900 hover:bg-slate-200 rounded-xl transition-all active:scale-95 flex items-center gap-1.5"
+                        className="p-2 -ml-2 text-slate-600 hover:text-slate-900 hover:bg-blue-200 rounded-xl transition-all active:scale-95 flex items-center gap-1.5"
                         aria-label="Abrir menu"
                     >
                         <Menu size={24} />
@@ -461,172 +471,144 @@ export default function Navbar() {
                 </div>
             )}
 
-            {/* DRAWER — agora é flex column: header fixo + nav rolável */}
-            <div className={`fixed top-0 left-0 h-full w-90 max-w-[85vw] bg-white z-50 shadow-2xl transition-transform duration-300 ease-in-out flex flex-col ${
+            {/* DRAWER — flex column: cabeçalho fixo + navegação rolável + rodapé fixo (mesmo menu no desktop e no mobile) */}
+            <div className={`fixed top-0 left-0 h-full w-70 max-w-[85vw] bg-white z-50 shadow-2xl transition-transform duration-300 ease-in-out flex flex-col ${
                     menuOpen ? 'translate-x-0' : '-translate-x-full'}`
             }>
 
                 {/* Cabeçalho do drawer – fixo, não rola */}
-                <div className="flex items-center justify-between p-6 border-b border-slate-100 shrink-0">
+                <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 shrink-0">
                     {view === 'main' ? (
-                        <Link href="/" className="relative text-4xl font-semibold text-slate-800">
+                        <Link
+                            href="/"
+                            onClick={handleCloseMenu}
+                            className="relative text-2xl font-semibold text-slate-800"
+                        >
                             <span className="bg-gradient-to-r from-indigo-500 via-fuchsia-500 via-30% via-rose-500 via-60% to-amber-500 bg-clip-text text-transparent animate-gradient">
                                 .Prisma
                             </span>
                             Ofertas
-                            <span className="text-green-600 text-5xl leading-0"></span>
 
-                            <p className="absolute text-xs font-semibold -top-2 -right-6 px-3 p-0.5 rounded-full flex items-center gap-2 bg-gradient-to-r from-indigo-500 via-fuchsia-500 via-30% via-rose-500 via-60% to-amber-500 bg-clip-text text-transparent animate-gradient">
+                            <span className="absolute -top-1.5 -right-8 text-[10px] font-semibold bg-gradient-to-r from-indigo-500 via-fuchsia-500 via-30% via-rose-500 via-60% to-amber-500 bg-clip-text text-transparent animate-gradient">
                                 store
-                            </p>
+                            </span>
                         </Link>
                     ) : (
                         <button
                             onClick={handleBackToMain}
-                            className="flex items-center gap-2 text-slate-600 hover:text-slate-900 transition-colors text-lg font-medium"
+                            className="flex items-center gap-2 -ml-2 px-2 py-1.5 rounded-md text-slate-600 hover:bg-cyan-200 hover:text-slate-900 transition-colors text-base font-medium"
                         >
-                            <ArrowLeft size={24} />
+                            <ArrowLeft size={20} />
                             <span>Voltar</span>
                         </button>
                     )}
 
                     <button
                         onClick={handleCloseMenu}
-                        className="p-2 text-slate-500 hover:bg-slate-200 rounded-xl transition-all"
+                        className="p-2 text-slate-500 hover:bg-blue-200 hover:text-slate-900 rounded-md transition-colors"
                         aria-label="Fechar menu"
                     >
-                        <X size={24} />
+                        <X size={22} />
                     </button>
                 </div>
 
-                <div className="h-[2px] mx-6 rounded-full bg-gradient-to-r from-red-400 via-cyan-500 to-violet-500 shrink-0" />
+                <div className="h-[2px] mx-5 rounded-full bg-gradient-to-r from-red-400 via-cyan-500 to-violet-500 shrink-0" />
 
-                {/* Conteúdo do drawer – agora rolável, ocupa o espaço restante */}
-                <nav className="p-6 space-y-6 flex-1 overflow-y-auto">
+                {/* Conteúdo do drawer – rolável */}
+                <nav className="flex-1 overflow-y-auto px-3 py-4">
                     {view === 'main' ? (
                         <>
-                            <ul className="space-y-5">
-                                <p className="text-center text-sm text-slate-800 mt-1 text-xl">
-                                    Explore o conteúdo do site
-                                </p>
-
-                                <hr />
+                            <ul className="space-y-1">
+                                <li>
+                                    <Link href="/" className={drawerLinkClass} onClick={handleCloseMenu}>
+                                        <Home size={19} className={drawerIconClass} />
+                                        Início
+                                    </Link>
+                                </li>
 
                                 <li>
-                                    <Link
-                                        href="/newsletter"
-                                        className="flex items-center gap-3 text-slate-700 hover:text-cyan-600 transition-colors text-lg"
-                                        onClick={handleCloseMenu}
-                                    >
-                                        <Mail size={20} />
+                                    <Link href="/shop" className={drawerLinkClass} onClick={handleCloseMenu}>
+                                        <Store size={19} className={drawerIconClass} />
+                                        Loja
+                                    </Link>
+                                </li>
+
+                                <li>
+                                    <button onClick={handleOpenCategories} className={drawerLinkClass}>
+                                        <FolderOpen size={19} className={drawerIconClass} />
+                                        Todas as categorias
+                                        <ChevronRight size={17} className="ml-auto text-slate-900" />
+                                    </button>
+                                </li>
+
+                                <li>
+                                    <Link href="/newsletter" className={drawerLinkClass} onClick={handleCloseMenu}>
+                                        <Mail size={19} className={drawerIconClass} />
                                         Newsletter
                                     </Link>
                                 </li>
 
                                 <li>
-                                    <button
-                                        onClick={handleOpenCategories}
-                                        className="flex items-center gap-3 text-slate-700 hover:text-cyan-600 transition-colors text-lg w-full text-left"
-                                    >
-                                        <FolderOpen size={20} />
-                                        Todas as Categorias
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <Link
-                                        href="/sobre"
-                                        className="flex items-center gap-3 text-slate-700 hover:text-cyan-600 transition-colors text-lg"
-                                        onClick={handleCloseMenu}
-                                    >
-                                        <Info size={20} />
+                                    <Link href="/sobre" className={drawerLinkClass} onClick={handleCloseMenu}>
+                                        <Info size={19} className={drawerIconClass} />
                                         Sobre
                                     </Link>
                                 </li>
 
                                 <li>
-                                    <Link
-                                        href="/contato"
-                                        className="flex items-center gap-3 text-slate-700 hover:text-cyan-600 transition-colors text-lg"
-                                        onClick={handleCloseMenu}
-                                    >
-                                        <PhoneIcon size={20} />
+                                    <Link href="/contato" className={drawerLinkClass} onClick={handleCloseMenu}>
+                                        <PhoneIcon size={19} className={drawerIconClass} />
                                         Contato
                                     </Link>
                                 </li>
+                            </ul>
 
+                            <div className="my-4 mx-3 h-px bg-slate-300" />
+
+                            <ul>
                                 <li>
-                                    <Link
-                                        href="/privacidade"
-                                        className="flex items-center gap-3 text-slate-700 hover:text-cyan-600 transition-colors text-lg"
-                                        onClick={handleCloseMenu}
-                                    >
-                                        <SearchIcon size={20} />
-                                        Política de Privacidade
+                                    <Link href="/privacidade" className={drawerLinkClass} onClick={handleCloseMenu}>
+                                        <ShieldCheck size={19} className={drawerIconClass} />
+                                        Política de privacidade
                                     </Link>
                                 </li>
-
-                                <div className="h-[2px] mx-6 rounded-full bg-gradient-to-r from-red-400 via-cyan-500 to-violet-500" />
                             </ul>
 
                             {/* Redes sociais – apenas na view main */}
-                            <div className="border-t border-slate-100">
-                                <p className="text-sm text-slate-800 mb-5">
-                                    Siga-nos
-                                </p>
+                            <div className="mt-6 px-3">
+                                <p className="text-sm text-slate-500 mb-3">Siga-nos</p>
 
-                                <div className="flex gap-5">
+                                <div className="flex gap-2">
                                     <a href="#"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="p-2 bg-blue-200 hover:bg-blue-300 rounded-full transition-all">
-                                    
-                                        <FaFacebookF
-                                            size={18}
-                                            className="text-blue-700"
-                                        />
+                                        aria-label="Facebook"
+                                        className="w-9 h-9 flex items-center justify-center rounded-md border border-slate-200 text-slate-500 hover:bg-blue-50 hover:border-blue-500 hover:text-blue-700 transition-colors">
+                                        <FaFacebookF size={15} />
                                     </a>
 
                                     <a href="#"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="p-2 bg-purple-200 hover:bg-purple-300 rounded-full transition-all">
-                                    
-                                        <FaInstagram
-                                            size={18}
-                                            className="text-purple-700"
-                                        />
+                                        aria-label="Instagram"
+                                        className="w-9 h-9 flex items-center justify-center rounded-md border border-slate-200 text-slate-500 hover:bg-fuchsia-50 hover:border-fuchsia-500 hover:text-fuchsia-700 transition-colors">
+                                        <FaInstagram size={16} />
                                     </a>
 
                                     <a href="#"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="p-2 bg-green-200 hover:bg-green-300 rounded-full transition-all">
-                                    
-                                        <FaWhatsapp
-                                            size={18}
-                                            className="text-green-700"
-                                        />
+                                        aria-label="WhatsApp"
+                                        className="w-9 h-9 flex items-center justify-center rounded-md border border-slate-200 text-slate-500 hover:bg-green-50 hover:border-green-500 hover:text-green-700 transition-colors">
+                                        <FaWhatsapp size={16} />
                                     </a>
                                 </div>
-                            </div>
-
-                            <div className="text-center pt-6">
-                                <div className="h-px bg-gradient-to-r from-transparent via-slate-800 to-transparent" />
-
-                                <span className="bg-gradient-to-r from-indigo-500 via-fuchsia-500 via-30% via-rose-500 via-60% to-amber-500 bg-clip-text text-transparent animate-gradient">
-                                    .Prisma
-                                </span>
-
-                                Ofertas Copyright © {new Date().getFullYear()}
-
-                                <span className="text-green-600 text-5xl leading-0"></span>
                             </div>
                         </>
                     ) : (
                         // ---------- LISTA DE CATEGORIAS ----------
                         <div>
-                            <h3 className="text-sm font-medium text-slate-800 uppercase tracking-wider mb-4">
+                            <h3 className="px-3 mb-2 text-sm font-semibold text-slate-800">
                                 Categorias
                             </h3>
 
@@ -635,12 +617,12 @@ export default function Navbar() {
                                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
                                 </div>
                             ) : categories.length > 0 ? (
-                                <ul className="space-y-3">
+                                <ul className="space-y-1">
                                     {categories.map((cat) => (
                                         <li key={cat.id}>
                                             <Link
                                                 href={`/category/${cat.slug || cat.id}`}
-                                                className="block text-slate-700 hover:text-cyan-600 transition-colors text-base"
+                                                className={drawerLinkClass}
                                                 onClick={handleCloseMenu}
                                             >
                                                 {cat.name}
@@ -649,13 +631,21 @@ export default function Navbar() {
                                     ))}
                                 </ul>
                             ) : (
-                                <p className="text-slate-400 text-sm">
+                                <p className="px-3 text-slate-400 text-sm">
                                     Nenhuma categoria encontrada.
                                 </p>
                             )}
                         </div>
                     )}
                 </nav>
+
+                {/* Rodapé do drawer – fixo */}
+                <div className="shrink-0 border-t border-slate-100 px-5 py-4 text-xs text-slate-500 text-center">
+                    <span className="bg-gradient-to-r from-indigo-500 via-fuchsia-500 via-30% via-rose-500 via-60% to-amber-500 bg-clip-text text-transparent animate-gradient">
+                        .Prisma
+                    </span>
+                    Ofertas © {new Date().getFullYear()}
+                </div>
             </div>
         </>
     )
