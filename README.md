@@ -1,35 +1,42 @@
-🛍️ PrismaOfertas
+# 🛍️ PrismaOfertas
 
-👉 See it live: [prismaofertas.netlify.app](https://prismaofertas.netlify.app/)
+![PrismaOfertas Logo](logo)
 
-A modern Smart E-commerce platform built with cutting-edge technologies from the JavaScript ecosystem, prioritizing performance, scalability, security, and user experience.
+### 👉 [**See it live →[ YOUR-SITE-LINK**](YOUR-SITE-LINK)](https://prismaofertas.netlify.app/)
 
-📖 About the Project
+A modern, smart e-commerce platform built with cutting-edge technologies from the JavaScript ecosystem, prioritizing performance, scalability, security, and user experience.
+
+> 💼 **Need a store like this for your business?** Explore the live demo above, browse the code below, and get in touch. Let's build yours.
+
+## 📖 About the Project
 
 PrismaOfertas is a Full Stack application created to serve as a professional foundation for modern online stores.
 
-The system was built using a modular, scalable, and easy-to-maintain architecture, allowing complete management of products, categories, user authentication, cloud image storage, price monitoring, automations, and an administrative dashboard.
+It was built with a modular, scalable, and easy-to-maintain architecture, allowing complete management of products, categories, user authentication, cloud image storage, price monitoring, automations, and an administrative dashboard.
 
-The goal of the project is to bring together the best tools on the market in a single platform, providing a fast, secure, and intuitive experience for both customers and administrators.
+The goal is to bring together the best tools on the market in a single platform, providing a fast, secure, and intuitive experience for both customers and administrators.
 
-🚀 Key Features
-🛒 Complete product catalog
-🔎 Dynamic search
-❤️ Favorites system
-📂 Category management
-👤 Secure authentication
-🔐 Access control
-🛠 Administrative dashboard
-📷 Image upload
-☁️ Cloud storage
-⚡ Background jobs
-📱 Responsive interface
-🚀 High performance
-🔒 Security
-🏗️ Architecture
+## 🚀 Key Features
+
+- 🛒 Complete product catalog
+- 🔎 Dynamic search
+- ❤️ Favorites system
+- 📂 Category management
+- 👤 Secure authentication
+- 🔐 Access control
+- 🛠 Administrative dashboard
+- 📷 Image upload
+- ☁️ Cloud storage
+- ⚡ Background jobs
+- 📱 Responsive interface
+- 🚀 High performance
+- 🔒 Security
+
+## 🏗️ Architecture
 
 The project follows a modern Full Stack architecture based on independent components.
 
+```
 Client
 │
 ▼
@@ -43,187 +50,73 @@ Prisma ORM
 │
 ▼
 Neon PostgreSQL
+```
 
-External services:
+**External services:** Clerk · AWS S3 · ImageKit · Inngest
 
-Clerk
-AWS S3
-ImageKit
-Inngest
+The architecture was planned with these goals in mind: scalability, organization, modularity, ease of maintenance, clean code, and high performance.
 
-The entire architecture was planned with the following goals in mind:
+## 💻 Tech Stack
 
-Scalability
-Organization
-Modularity
-Ease of maintenance
-Clean code
-High performance
-💻 Tech Stack
-Frontend
-JavaScript (ES6+)
-Tailwind CSS
-Backend
+| Layer | Technology |
+|---|---|
+| Frontend | JavaScript (ES6+), Next.js, Tailwind CSS |
+| Backend | Node.js (APIs, business logic, database communication, async processing, service integration) |
+| ORM | Prisma (relationships, migrations, optimized queries) |
+| Database | Neon PostgreSQL (serverless) |
+| Authentication | Clerk (sign up, login, sessions, middleware, protected routes, permissions) |
+| File storage | AWS S3 (high availability, scalability, security) |
+| Image delivery | ImageKit (compression, CDN, resizing, automatic conversion) |
+| Automations | Inngest (price updates, periodic monitoring, queues, scheduled jobs) |
 
-Node.js
+The database stores products, categories, users, favorites, settings, and administrative data.
 
-Responsible for:
+## ⚙️ Features
 
-APIs
-Business logic
-Database communication
-Asynchronous processing
-Integration between services
-Database
+### 🛒 Products
+Creation, updating, deletion, search, pagination, images, descriptions, prices, and promotions.
 
-Prisma ORM
-
-Prisma acts as the database access layer, offering:
-
-Modern ORM
-Relationships
-Migrations
-Optimized queries
-Security
-Ease of maintenance
-
-Neon PostgreSQL
-
-A Serverless database based on PostgreSQL.
-
-Stores:
-
-Products
-Categories
-Users
-Favorites
-Settings
-Administrative data
-Authentication
-
-Clerk
-
-All user management is handled using Clerk.
-
-Features:
-
-Sign up
-Login
-Logout
-Sessions
-Middleware
-Protected routes
-Permission control
-File Upload
-
-AWS S3
-
-Used for secure file storage.
-
-Benefits:
-
-High availability
-Scalability
-Security
-Excellent performance
-Image Management
-
-ImageKit
-
-Responsible for automatic image optimization.
-
-Features:
-
-Compression
-CDN
-Resizing
-Automatic conversion
-Faster loading
-Automations
-
-Inngest
-
-Runs background tasks.
-
-Examples:
-
-Automatic price updates
-Periodic monitoring
-Queue processing
-Scheduled jobs
-Asynchronous executions
-⚙️ Features
-🛒 Products
-Creation
-Updating
-Deletion
-Search
-Pagination
-Images
-Descriptions
-Prices
-Promotions
-📂 Categories
-
+### 📂 Categories
 Smart organization of products.
 
-🔎 Search
-
+### 🔎 Search
 Fast search system for locating products.
 
-❤️ Favorites
-
+### ❤️ Favorites
 Authenticated users can save favorite products.
 
-👤 Users
+### 👤 Users
+Complete user management through Clerk.
 
-Complete management through Clerk.
+### 🛠 Administration
+Exclusive dashboard for administrators: manage products, update prices, manage categories, and general administration.
 
-🛠 Administration
+### 📱 Responsiveness
+Built with a Mobile First approach, working on desktop, laptop, tablet, and smartphone.
 
-Exclusive dashboard for administrators.
+## 🚀 Performance
 
-Allows:
+- Lazy loading
+- Image compression
+- CDN
+- Optimized queries
+- Componentization
+- Modular code
+- Background jobs
+- Asynchronous processing
 
-Managing products
-Updating prices
-Managing categories
-General administration
-📱 Responsiveness
+## 🔒 Security
 
-Interface built using the Mobile First concept, working perfectly on:
+- Secure authentication
+- Protected routes
+- Middleware
+- Data validation
+- Access control
+- Secure sessions
 
-Desktop
-Laptop
-Tablet
-Smartphone
-🚀 Performance
+## 📦 Project Structure
 
-Several techniques were applied to optimize the application.
-
-Among them:
-
-Lazy Loading
-Image compression
-CDN
-Optimized queries
-Componentization
-Modular code
-Background Jobs
-Asynchronous processing
-🔒 Security
-
-The system uses modern development best practices.
-
-Including:
-
-Secure authentication
-Protected routes
-Middleware
-Data validation
-Access control
-Secure sessions
-📦 Project Structure
+```
 app/
 components/
 lib/
@@ -232,81 +125,66 @@ hooks/
 prisma/
 public/
 styles/
+```
 
 Organized following best practices to ease maintenance and scalability.
 
-⚡ Installation
+## ⚡ Getting Started
 
-Clone the project
-
-bash
+```bash
+# Clone the project
 git clone https://github.com/LenonGabrielNogueira/PrismaOfertas.git
 
-Enter the folder
-
-bash
+# Enter the folder
 cd PrismaOfertas
 
-Install dependencies
-
-bash
+# Install dependencies
 npm install
 
-Configure the file
+# Configure your environment variables
+# (create a .env file)
 
-.env
-
-Run the migrations
-
-bash
+# Run the migrations
 npx prisma migrate dev
 
-Start the project
-
-bash
+# Start the project
 npm run dev
-📌 Technologies
-Node.js
-JavaScript
-Prisma ORM
-Neon PostgreSQL
-Tailwind CSS
-Clerk
-AWS S3
-ImageKit
-Inngest
-🎯 Goals
+```
 
-This project was developed with the following goals:
+## 🎯 Goals
 
-Professional architecture
-Scalability
-Security
-High performance
-Clean code
-Organization
-Ease of maintenance
-User experience
+- Professional architecture
+- Scalability
+- Security
+- High performance
+- Clean code
+- Organization
+- Ease of maintenance
+- Great user experience
 
-Besides serving as a portfolio project demonstrating knowledge of modern Full Stack development.
+It also serves as a portfolio project demonstrating modern Full Stack development skills.
 
-📈 Future Implementations
-Reviews system
-Price history
-Analytics dashboard
-Wishlist
-Product comparison tool
-Integration with external APIs
-Coupon system
-Online payments
-Marketplace
-Artificial Intelligence for recommendations
-👨‍💻 Author
+## 📈 Roadmap
 
-Lenon Gabriel Nogueira
+- Reviews system
+- Price history
+- Analytics dashboard
+- Wishlist
+- Product comparison tool
+- Integration with external APIs
+- Coupon system
+- Online payments
+- Marketplace
+- AI-powered recommendations
 
-Full Stack Developer passionate about technology, automation, and the development of modern applications using the JavaScript ecosystem.
+## 👨‍💻 Author
 
-⭐ PrismaOfertas
+**Lenon Gabriel Nogueira**
+
+Full Stack Developer passionate about technology, automation, and building modern applications with the JavaScript ecosystem.
+
+📩 **Open to freelance projects.** Contact me on [Upwork](YOUR-UPWORK-PROFILE-LINK) or via [GitHub](https://github.com/LenonGabrielNogueira).
+
+## ⭐ Support
 
 If this project was useful to you, please consider leaving a ⭐ on the repository.
