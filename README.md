@@ -1,8 +1,7 @@
 # 🛍️ PrismaOfertas
 
-![PrismaOfertas Logo](logo)
 
-### 👉 [**See it live → https://prismaofertas.netlify.app/
+### 👉 See it live → https://prismaofertas.netlify.app/
 
 A modern, smart e-commerce platform built with cutting-edge technologies from the JavaScript ecosystem, prioritizing performance, scalability, security, and user experience.
 
